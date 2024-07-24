@@ -3,6 +3,11 @@ const { REST, Routes, ApplicationCommandOptionType } = require("discord.js");
 
 const commands = [
     {
+        name: "embed",
+        description: "a simple embed",
+    },
+
+    {
         name: "hello",
         description: "just a simple hello command",
     },
