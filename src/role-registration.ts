@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { Client, IntentsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+import { Client, IntentsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel, MessageActionRowComponentBuilder } from "discord.js";
 const Token = process.env.DISCORD_TOKEN;
 const client = new Client({
     intents: [     // intents == Permissions, check https://discord.com/developers/docs/topics/gateway#list-of-intents for a list of all intents
@@ -9,7 +9,7 @@ const client = new Client({
         IntentsBitField.Flags.MessageContent,
     ],
 });
-
+ 
 const roles = [
     {id: "1265938810848411721", label: "Qingque Enjoyer"},
     {id: "1265938900786872332", label: "Jingliu Simp"},
@@ -20,9 +20,10 @@ const roles = [
 
 client.on("ready", async(c) =>{
     try{
-        const channel = await client.channels.cache.get("1265942101284356166");
+        const channel = await <TextChannel>client.channels.cache.get("1265942101284356166");
         if(!channel) return;
-        const row = new ActionRowBuilder();
+
+        const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
 
         roles.forEach((role) =>{
             row.components.push(
@@ -37,7 +38,7 @@ client.on("ready", async(c) =>{
             components: [row]
         });
         process.exit();
-    }
+        }
     catch(error){
         console.log(error);
     }

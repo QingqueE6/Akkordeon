@@ -1,17 +1,18 @@
 require('dotenv').config()
 const BadWords = ["D4", "d4", "Diablo", "diablo", "D3", "d3"]
-const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
+import { Client, IntentsBitField, EmbedBuilder } from "discord.js";
 const Token = process.env.DISCORD_TOKEN;
+const someNumber = 40;
 const client = new Client({
     intents: [     // intents == Permissions, check https://discord.com/developers/docs/topics/gateway#list-of-intents for a list of all intents
         IntentsBitField.Flags.Guilds,
         IntentsBitField.Flags.GuildMembers,
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.MessageContent,
-    ],
+    ], 
 });
-
-client.on("messageCreate", (message) =>{
+ 
+client.on("messageCreate", (message: any) =>{
     if (message.author.bot) return; // to make sure the bot doesnt loop itself
 
     for (let i = 0; i < BadWords.length; i++) {
@@ -21,7 +22,7 @@ client.on("messageCreate", (message) =>{
     }
 });
 
-client.on("interactionCreate", async(interaction) =>{
+client.on("interactionCreate", async(interaction: any) =>{
 try {
     if(interaction.isButton()){
         await interaction.deferReply({ephemeral: true});
@@ -47,7 +48,7 @@ try {
 });
 
 
-client.on("interactionCreate", (interaction, message) => {
+client.on("interactionCreate", (interaction: any) => {
     if(!interaction.isChatInputCommand()) return;
 
     if(interaction.isChatInputCommand()){
@@ -66,11 +67,13 @@ client.on("interactionCreate", (interaction, message) => {
         if(interaction.commandName === "embed"){
             const embed = new EmbedBuilder()
             .setTitle("Look at this guy lmao")
-            .setDescription(`xD <:cluegifungus:1265274381345624186>`) // <:cluegifungus:1265274440816525393>
+            .setDescription(`xD <:cluegifungus:1265274381345624186>`)
             .setImage(interaction.user.avatarURL())
             // .setImage("https://cdn.discordapp.com/attachments/1265271317905805442/1265271412864843777/qingque_thumbnail.png?ex=66a0e754&is=669f95d4&hm=c433c952d670e95b905cee55f37bec43ff40ee6d50ed13a38e6acba040db0586&");
 
-            interaction.reply({embeds: [embed]});
+            interaction.reply({
+                embeds: [embed]
+            }); 
         }
         console.log(interaction);
     }

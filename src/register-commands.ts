@@ -1,11 +1,11 @@
 require("dotenv").config();
-const { REST, Routes, ApplicationCommandOptionType } = require("discord.js");
+import { REST, Routes, ApplicationCommandOptionType } from "discord.js";
 
 const commands = [
     {
         name: "embed",
         description: "a simple embed",
-    },
+    }, 
 
     {
         name: "hello",
@@ -49,12 +49,12 @@ const commands = [
     },
 ];
 
-const rest = new REST({version: "10"}).setToken(process.env.DISCORD_TOKEN);
+const rest = new REST({version: "10"}).setToken(process.env.DISCORD_TOKEN as string);
 
 (async () => {
     try {
         console.log("Registering commands. . .");
-        await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+        await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID as string, process.env.GUILD_ID as string),
                         { body: commands }
                 )
         console.log("Command registered!");
